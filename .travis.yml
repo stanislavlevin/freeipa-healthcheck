@@ -18,12 +18,12 @@ env:
 
 install:
     - pip3 install --upgrade pip
-    - pip3 install pycodestyle tox
+    - pip3 install tox
 
 script:
     - >
       if [[ "$TASK_TO_RUN" == "lint" ]]; then
-          tox -epep8,flake8
+          tox -epep8,flake8,lint
       else
           docker pull $TASK_TO_RUN;
           docker run -v ${TRAVIS_BUILD_DIR}:/root/src/ $TASK_TO_RUN /bin/sh -c "dnf -y install freeipa-server freeipa-server-trust-ad tox python3-pytest; cd /root/src; tox -epy3"
